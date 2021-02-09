@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
 int n,a[15]={},i,ch[2600010]={},sum=0,j;
 
 int main(){
@@ -38,3 +39,35 @@ int main(){
     }
     printf("%d",cnt);
 }
+*/
+
+int n,a[15]={},i,ch[2600010]={},j,s;
+
+int main(){
+    scanf("%d",&n);
+    for(i=0;i<n;i++){
+        scanf("%d",&a[i]);
+        s=s+a[i];
+    }
+    for(i=1;i<=pow(3,n);i++){
+        int t=i,sum=0,k=0;
+        while(t!=0){
+            int r=t%3;
+            if(r==1){
+                sum=sum+a[k];
+            }
+            else if(r==2){
+                sum=sum-a[k];
+            }
+            k++;
+            t=t/3;
+        }
+        ch[abs(sum)]=1;
+    }
+    int cnt=0;
+    for(i=1;i<=s;i++){
+        if(ch[i]==0) cnt++;
+    }
+    printf("%d",cnt);
+}
+
