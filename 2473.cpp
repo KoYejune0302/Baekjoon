@@ -22,10 +22,10 @@ int main(){
         for(j=i+1;j<n;j++){
             int t=a[i]+a[j],k;
             k=upper_bound(a+j+1,a+n,-t)-a;
-            if(k-1>j && abs(t+a[k-1])<abs(s.a+s.b+s.c)){
+            if(k-1>j && abs((long long)t+a[k-1])<abs((long long)s.a+s.b+s.c)){
                 s={a[i],a[j],a[k-1]};
             }
-            if(k<n && abs(t+a[k])<abs(s.a+s.b+s.c)){
+            if(k<n && abs((long long)t+a[k])<abs((long long)s.a+s.b+s.c)){
                 s={a[i],a[j],a[k]};
             }
         }
