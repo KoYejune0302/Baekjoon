@@ -1,47 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n,a[11][11],mx=0;
+int n,a[15][15],b[25],mx=0;
 
-bool ch(int r,int c){
-    int i,j;
-    int p[4]={1,1,-1,-1},q[4]={-1,1,1,-1};
-    if(a[r][c]!=1){
-        return false;
-    }
-    for(i=0;i<4;i++){
-        for(j=1;j<=n;j++){
-            if(r+p[i]*j<0 || r+p[i]*j>=n || c+q[i]*j<0 || c+q[i]*j>=n){
-                break;
-            }
-            if(a[r+p[i]*j][c+q[i]*j]==2){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-void f(int t,int x, int y){
+void f(int t,int m){
     mx=max(mx,t);
-    if(y!=n-1){
-        if(ch(x,y)){
-            a[x][y]=2;
-            f(t+1,x,y+1);
-            a[x][y]=1;
-        }
-        f(t,x,y+1);
-
+    if(mx>=t+2*n-m) return;
+    if(m==2*n) return;
+    int i,k,x,y;
+    if(m>n) k=n-(m-n);
+    else k=m;
+    if(m<=n){
+        x=m-1;
+        y=0;
     }
-    else if(x!=n-1){
-        if(ch(x,y)){
-            a[x][y]=2;
-            f(t+1,x+1,0);
-            a[x][y]=1;
-        }
-        f(t,x+1,0);
+    else{
+        x=n-1;
+        y=m-n;
     }
-    return;
+    for(i=0;i<k;i++){
+        if(b[n-(x-i)+(y+i)]!=1 && a[x-i][y+i]==1){
+            a[x-i][y+i]=2;
+            b[n-(x-i)+(y+i)]=1;
+            f(t+1,m+1);
+            b[n-(x-i)+(y+i)]=0;
+            a[x-i][y+i]=1;
+        }
+    }
+    f(t,m+1);
 }
 
 int main(){
@@ -52,6 +38,6 @@ int main(){
             scanf("%d",&a[i][j]);
         }
     }
-    f(0,0,0);
+    f(0,1);
     printf("%d",mx);
 }
