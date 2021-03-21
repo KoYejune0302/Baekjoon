@@ -1,79 +1,54 @@
-#include<stdio.h>
-#include<algorithm>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-int l,k,c,a[10010]={0},b[10010]={0};
+int a[10010],l,k,c;
 
-bool check(int x){
+bool chk(int x){
     int i,t=0,cnt=0;
-    for(i=0;i<=k;i++){
-        if(b[i]<=x){
-            if(t+b[i]>x){
-                t=0;
-                cnt=cnt+1;
-                i=i-1;
-            }
-            else{
-                t=t+b[i];
-            }
-        }
-        else{
-            return 1;
+    for(i=1;i<=k+1;i++){
+        if(a[i]-a[i-1]>x) return false;
+        if(a[i]-t>x){
+            t=a[i-1];
+            cnt++;
         }
     }
-    return cnt>c;
+    if(cnt<=c) return true;
+    else return false;
 }
 
-int tree(int s,int f){
-    int x;
-    while(s<f){
-        x=(s+f)/2;
-        if(check(x)){
-            s=x+1;
-        }
-        else{
-            f=x;
+int f(int x){
+    int i,t=0,cnt=0;
+    for(i=1;i<=k+1;i++){
+        if(a[i]-t>x){
+            t=a[i-1];
+            cnt++;
         }
     }
-    return s;
+    return cnt;
 }
 
 int main(){
-    int i,x,t,cnt,y;
+    int i,h,t,p,q;
     scanf("%d %d %d",&l,&k,&c);
-    for(i=0;i<k;i++){
+    for(i=1;i<=k;i++){
         scanf("%d",&a[i]);
     }
-    //sort하는거 추가하기
-    b[0]=a[0];
-    for(i=1;i<k;i++){
-        b[i]=a[i]-a[i-1];
+    a[k+1]=l;
+    sort(a,a+k+2);
+    h=0;
+    t=l;
+    while(h<t){
+        int mid=(h+t)/2;
+        if(chk(mid)) t=mid;
+        else h=mid+1;
     }
-    b[k]=l-a[k-1];
-    x=tree(0,l);
-    t=0;
-    cnt=0;
+    int r=k+1;
     for(i=k;i>=0;i--){
-        if(t+b[i]>x){
-            y=i;
-            i=i+1;
-            cnt=cnt+1;
-            t=0;
-        }
-        else{
-            t=t+b[i];
+        if(a[r]-a[i]>h){
+            r=i+1;
         }
     }
-    if(c-cnt>0){
-        y=0;
-    }
-    printf("%d %d",x,a[y]);
+    if(f(h)<c) printf("%d %d",h,a[1]);
+    else  printf("%d %d",h,a[r]);
+    return 0;
 }
-
-/*
-9 2 1
-4 5
-
-5 4
-*/
