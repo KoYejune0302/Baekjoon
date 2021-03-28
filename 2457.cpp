@@ -1,63 +1,26 @@
-#include<stdio.h>
-#include<algorithm>
-
+#include<bits/stdc++.h>
 using namespace std;
 
 struct date{
-    int s1;
-    int s2;
-    int f1;
-    int f2;
+    int a1;
+    int a2;
+    int b1;
+    int b2;
 };
 
-bool f(int x1, int x2,int y1, int y2){
-    if(x1!=y1){
-        return x1<y1;
-    }
-    else{
-        return x2<=y2;
-    }
-}
+bool cmp(){
 
-bool cmp(date x, date y){
-    if(x.s1==y.s1 && x.s2 == y.s2){
-        return !f(x.f1,x.f2,y.f1,y.f2);
-    }
-    else{
-        return f(x.s1,x.s2,y.s1,y.s2);
-    }
 }
-
-date a[100010];
 
 int main(){
-    int n,i,t,cnt,j,k;
-    scanf("%d",&n);
-    for(i=1;i<=n;i++){
-       scanf("%d %d %d %d",&a[i].s1,&a[i].s2,&a[i].f1,&a[i].f2);
-    }
-    a[0]={3,1,3,1};
-    sort(a+1,a+n+1,cmp);
-    t=0;
-    i=1;
-    cnt=0;
-    j=1;
-    while(f(a[t].f1,a[t].f2,11,30)){
-        k=0;
-        for(;j<=n;j++){
-            if(f(a[j].s1,a[j].s2,a[t].f1,a[t].f2) && f(a[k].f1,a[k].f2,a[j].f1,a[j].f2)){
-                k=j;
-            }
-            else if(!f(a[j].s1,a[j].s2,a[t].f1,a[t].f2)){
-                break;
-            }
+    int a[100010][5],n,i,m[13]={0,31,28,21,30,31,30,31,31,30,31,30,31};
+    scanf("%f",&n);
+    for(i=0;i<n;i++){
+        scanf("%d %d %d %d",&a[i][0],&a[i][1],&a[i][2],&a[i][3]);
+        for(j=a[i][0];j<a[i][2];j++){
+            a[i][4]+=m[j];
         }
-        t=k;
-        if(k==0){
-            printf("0");
-            return 0;
-        }
-        cnt=cnt+1;
+        a[i][4]=a[i][3]-a[i][1];
     }
-    printf("%d",cnt);
+    sort(a,a+n,cmp);
 }

@@ -22,6 +22,10 @@ int main(){
         }
         else if(t[i]==')'){
             a--;
+            if(a<0){
+                printf("0");
+                return 0;
+            }
             if(i>=1 && t[i-1]=='('){
                 sum=sum+2*f(2,a)*f(3,b);
                 //printf("a : %d  b : %d sum : %d\n",a,b,sum);
@@ -34,6 +38,10 @@ int main(){
         }
         else if(t[i]==']'){
             b--;
+            if(b<0){
+                printf("0");
+                return 0;
+            }
             if(i>=1 && t[i-1]=='['){
                 sum=sum+3*f(2,a)*f(3,b);
                 //printf("a : %d  b : %d sum : %d\n",a,b,sum);
